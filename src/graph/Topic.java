@@ -4,15 +4,18 @@ import config.MainTrain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Topic {
     public final String name;
-    public List<Agent> subs;
-    public List<Agent> pubs;
+    public List<Agent> subs=new CopyOnWriteArrayList<>();
+    public List<Agent> pubs=new CopyOnWriteArrayList<>();
+    public Message msg;
     Topic(String name){
-        this.subs = new ArrayList<>();
-        this.pubs = new ArrayList<>();
-        this.name=name;
+        if (name==null || name.isEmpty()){
+            throw new IllegalArgumentException("Topic name cannot be null or empty");
+        }
+        this.name = name;
     }
 
     public void subscribe(Agent agent){
@@ -24,8 +27,9 @@ public class Topic {
     }
 
     public void publish(Message m) {
-        for (Agent a : subs) {
-            a.callback(this.name, m);  // קריאה למתודה callback של הסוכן
+        msg = m;
+        for (Agent agent : subs) {
+            agent.callback(this.name,msg);
         }
     }
 
@@ -36,6 +40,10 @@ public class Topic {
 
     public void removePublisher(Agent a){
         pubs.remove(a);
+    }
+
+    public Message getMessage(){
+        return msg;
     }
 
 

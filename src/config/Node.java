@@ -2,10 +2,7 @@ package config;
 
 import graph.Message;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Node {
     private String name;
@@ -15,7 +12,8 @@ public class Node {
     Node(String name) {
 
         this.name = name;
-        this.edges = new ArrayList<>();
+        this.edges = new ArrayList<Node>();
+       
     }
 
     public String getName() {
@@ -45,39 +43,31 @@ public class Node {
     public void addEdge(Node node) {
         edges.add(node);
     }
-
-
-
-    public boolean hasCycles() {
-        Set<Node> visited = new HashSet<>(); // סט של צמתים שכבר ביקרנו בהם
-
-        // מעבר על כל הצמתים בגרף
-        for (Node node :this.getEdges()) {
-            if (!visited.contains(node)) {
-                // אם מוצאים מעגל ברכיב קשיר כלשהו - מחזירים true
-                if (dfs(node, visited, new HashSet<>())) {
-                    return true;
-                }
-            }
-        }
-        return false; // אם לא נמצא מעגל בשום רכיב קשיר, מחזירים false
+    public boolean hasCycles(){
+        Set<Node> visited = new HashSet<Node>();
+        Set<Node> stack = new HashSet<Node>();
+        return hasCycleHelp(this,visited, stack);
     }
-
-    private boolean dfs(Node current, Set<Node> visited, Set<Node> stack) {
-        visited.add(current); // מסמנים את הצומת כצומת שביקרנו בו
-        stack.add(current);   // מוסיפים את הצומת לסט הצמתים שבשביל הנוכחי
-
-        for (Node neighbor : current.getEdges()) {
-            if (!visited.contains(neighbor)) {
-                if (dfs(neighbor, visited, stack)) {
-                    return true; // נמצא מעגל
-                }
-            } else if (stack.contains(neighbor)) {
-                return true; // נמצא מעגל (חזרה לצומת שכבר נמצא בסט השביל)
+    private boolean hasCycleHelp(Node current,Set<Node> visited,Set<Node> stack) {
+        if (stack.contains(current)) {
+            return true;
+        }
+        if (visited.contains(current)) {
+            return false;
+        }
+        visited.add(current);
+        stack.add(current);
+        for (Node n : current.getEdges()) {
+            if (hasCycleHelp(n,visited,stack)) {
+                return true;
             }
         }
-
-        stack.remove(current); // מסירים את הצומת מהשביל (חוזרים אחורה ב-DFS)
+        stack.remove(current);
         return false;
     }
+
+
+
+
+
 }

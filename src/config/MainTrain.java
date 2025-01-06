@@ -100,7 +100,7 @@ public class MainTrain {
         g.createFromTopics();
 
         if(g.size()!=8)
-            System.out.println("the graph you created from topics is not in the right size (-10)");
+            System.out.println("the graph you created from topics is not in the right size0000 (-10)");
         
         List<String> l=Arrays.asList("TA","TB","Aplus","Aminus","TR1","TR2","Amul","TR3");
         boolean b=true;
@@ -118,7 +118,7 @@ public class MainTrain {
         g.createFromTopics();
 
         if (!g.hasCycles())
-            System.out.println("Wrong result in hasCycles for topics graph with a cycle (-10)");
+            System.out.println("Wrong result in hasCycles for topics graph with a cycle0000 (-10)");
     }
     public static void main(String[] args) {
         testCycles();

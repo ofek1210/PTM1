@@ -9,6 +9,7 @@ public class MathExampleConfig implements Config {
         new BinOpAgent("plus", "A", "B", "R1", (x,y)->x+y);
         new BinOpAgent("minus", "A", "B", "R2", (x,y)->x-y);
         new BinOpAgent("mul", "R1", "R2", "R3", (x,y)->x*y);
+
     }
 
     @Override

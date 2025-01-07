@@ -1,8 +1,5 @@
 package graph;
 
-import config.MainTrain;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -18,10 +15,15 @@ public class Topic {
         this.name = name;
     }
 
-    public void subscribe(Agent agent){
-         if (!subs.contains(agent))
-        subs.add(agent);
+    public void subscribe(Agent agent) {
+        if (!subs.contains(agent)) {
+            subs.add(agent);
+            System.out.println("Subscribed agent: " + agent.getName() + " to topic: " + name);
+        } else {
+            System.out.println("Agent already subscribed: " + agent.getName() + " to topic: " + name);
+        }
     }
+
     public void unsubscribe(Agent a) {
         subs.remove(a);
     }
@@ -33,10 +35,15 @@ public class Topic {
         }
     }
 
-    public void addPublisher(Agent a){
-        if (!pubs.contains(a))
-            pubs.add(a);
+    public void addPublisher(Agent agent) {
+        if (!pubs.contains(agent)) {
+            pubs.add(agent);
+            System.out.println("Added publisher agent: " + agent.getName() + " to topic: " + name);
+        } else {
+            System.out.println("Agent already a publisher: " + agent.getName() + " to topic: " + name);
+        }
     }
+
 
     public void removePublisher(Agent a){
         pubs.remove(a);

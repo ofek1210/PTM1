@@ -26,10 +26,17 @@ public class BinOpAgent implements Agent {
         this._op = op;
         this.tm = TopicManagerSingleton.get();
 
+        // יצירת נושאי הקלט והפלט אם הם לא קיימים
+        tm.createTopicIfAbsent(topic1);
+        tm.createTopicIfAbsent(topic2);
+        tm.createTopicIfAbsent(output);
+
         // הרשמה לנושאי הקלט
         tm.getTopic(topic1).subscribe(this);
         tm.getTopic(topic2).subscribe(this);
     }
+
+
 
     @Override
     public void callback(String topic, Message msg) {

@@ -1,14 +1,15 @@
 package config;
-import graph.TopicManagerSingleton;
-import graph.TopicManagerSingleton.TopicManager;
-import graph.Agent;
-import graph.Message;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 
+import graph.Agent;
+import graph.Message;
+import graph.TopicManagerSingleton;
+import graph.TopicManagerSingleton.TopicManager;
 
 public class MainTrain {
 
@@ -19,7 +20,7 @@ public class MainTrain {
             }
         }
         return false;
-    }    
+    }
 
     public static void testCycles(){
         Node a = new Node("A");
@@ -50,11 +51,11 @@ public class MainTrain {
         
     }
 
-    public static class GetAgent implements Agent{
+    public static class GetAgent implements Agent {
 
         public Message msg;
         public GetAgent(String topic){
-            graph.TopicManagerSingleton.get().getTopic(topic).subscribe(this);
+            TopicManagerSingleton.get().getTopic(topic).subscribe(this);
         }
 
         @Override
@@ -74,7 +75,7 @@ public class MainTrain {
     }
 
     public static void testBinGraph(){
-        TopicManager tm= TopicManagerSingleton.get();
+        TopicManager tm=TopicManagerSingleton.get();
         tm.clear();
         Config c=new MathExampleConfig();
         c.create();
@@ -103,7 +104,7 @@ public class MainTrain {
         g.createFromTopics();
 
         if(g.size()!=8)
-            System.out.println("the graph you created from topics is not in the right size0000 (-10)");
+            System.out.println("the graph you created from topics is not in the right size (-10)");
         
         List<String> l=Arrays.asList("TA","TB","Aplus","Aminus","TR1","TR2","Amul","TR3");
         boolean b=true;
@@ -121,7 +122,7 @@ public class MainTrain {
         g.createFromTopics();
 
         if (!g.hasCycles())
-            System.out.println("Wrong result in hasCycles for topics graph with a cycle0000 (-10)");
+            System.out.println("Wrong result in hasCycles for topics graph with a cycle (-10)");
     }
     public static void main(String[] args) {
         testCycles();

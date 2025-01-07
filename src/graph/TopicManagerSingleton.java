@@ -22,6 +22,13 @@ public class TopicManagerSingleton {
         public void clear(){
             topics.clear();
         }
+
+        public void createTopicIfAbsent(String name) {
+            if (!topics.containsKey(name)) {
+                topics.put(name, new Topic(name));
+            }
+        }
+
     }
 public static TopicManager get(){
         return TopicManager.instance;

@@ -1,37 +1,38 @@
 package graph;
 
-
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class TopicManagerSingleton {
 
     public static class TopicManager{
-        private static final TopicManager instance = new TopicManager();
+
+        Map<String,Topic> topics;
+        
         private TopicManager(){
+            topics=new ConcurrentHashMap<>();
+        }
+    
+        public synchronized Topic getTopic(String name){
+            if(!topics.containsKey(name))
+                topics.put(name, new Topic(name));
+            return topics.get(name);
+        }
 
-        }
-        private ConcurrentHashMap<String, Topic> topics = new ConcurrentHashMap<String, Topic>();
+        private static final TopicManager instance=new TopicManager();
 
-        public Topic getTopic(String topicName) {
-           return topics.computeIfAbsent(topicName,Topic::new);
+        public Collection<Topic> getTopics() {
+            return topics.values();
         }
-        public Collection<Topic> getTopics(){
-         return topics.values();
-        }
+
         public void clear(){
             topics.clear();
         }
-
-        public void createTopicIfAbsent(String name) {
-            if (!topics.containsKey(name)) {
-                topics.put(name, new Topic(name));
-            }
-        }
-
     }
-public static TopicManager get(){
+
+    public static TopicManager get(){
         return TopicManager.instance;
-}
+    }
     
 }

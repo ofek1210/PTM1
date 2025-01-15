@@ -9,18 +9,16 @@ public class Topic {
     public List<Agent> pubs=new CopyOnWriteArrayList<>();
     public Message msg;
     Topic(String name){
-        if (name==null || name.isEmpty()){
-            throw new IllegalArgumentException("Topic name cannot be null or empty");
-        }
+       
         this.name = name;
     }
 
     public void subscribe(Agent agent) {
         if (!subs.contains(agent)) {
             subs.add(agent);
-            System.out.println("Subscribed agent: " + agent.getName() + " to topic: " + name);
+       
         } else {
-            System.out.println("Agent already subscribed: " + agent.getName() + " to topic: " + name);
+        
         }
     }
 
@@ -38,9 +36,9 @@ public class Topic {
     public void addPublisher(Agent agent) {
         if (!pubs.contains(agent)) {
             pubs.add(agent);
-            System.out.println("Added publisher agent: " + agent.getName() + " to topic: " + name);
+        
         } else {
-            System.out.println("Agent already a publisher: " + agent.getName() + " to topic: " + name);
+           
         }
     }
 

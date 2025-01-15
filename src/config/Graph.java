@@ -4,7 +4,6 @@ package config;
 import graph.Agent;
 import graph.Topic;
 import graph.TopicManagerSingleton;
-
 import java.util.*;
 
 public class Graph extends ArrayList<Node> {
@@ -16,10 +15,8 @@ public class Graph extends ArrayList<Node> {
     }
 
     public void createFromTopics() {
-        System.out.println("createFromTopics called");
         this.clear();
         nodemap.clear();
-        System.out.println("Graph and nodemap cleared");
 
         TopicManagerSingleton.TopicManager tm = TopicManagerSingleton.get();
         List<Topic> topics = new ArrayList<>(tm.getTopics());
@@ -31,7 +28,6 @@ public class Graph extends ArrayList<Node> {
                 Node topicNode = new Node(topicNodeName);
                 nodemap.put(topicNodeName, topicNode);
                 this.add(topicNode);
-                System.out.println("Created and added topic node: " + topicNodeName);
             }
         }
 
@@ -52,7 +48,7 @@ public class Graph extends ArrayList<Node> {
                 Node agentNode = nodemap.get("A" + agent.getName());
                 if (agentNode != null) {
                     topicNode.addEdge(agentNode);
-                    System.out.println("Added edge from topic: " + topicNode.getName() + " to agent: " + agentNode.getName());
+                  
                 }
             }
         }
@@ -64,19 +60,13 @@ public class Graph extends ArrayList<Node> {
                 Node topicNode = nodemap.get("T" + topic.name);
                 if (agentNode != null) {
                     agentNode.addEdge(topicNode);
-                    System.out.println("Added edge from agent: " + agentNode.getName() + " to topic: " + topicNode.getName());
+                
                 }
             }
         }
 
-        // Final cycle detection
-        if (hasCycles()) {
-            System.out.println("Cycle detected in the graph.");
-        } else {
-            System.out.println("No cycles detected in the graph.");
-        }
-
-        System.out.println("Graph creation complete. Total nodes: " + this.size());
+       
+   
     }
 
     private void findOrCreateAgentNode(Agent agent) {
@@ -85,7 +75,7 @@ public class Graph extends ArrayList<Node> {
             Node node = new Node(agentNodeName);
             nodemap.put(agentNodeName, node);
             this.add(node);
-            System.out.println("Created and added new agent node: " + agentNodeName);
+     
         }
     }
 
